@@ -8,6 +8,7 @@ import {
   Dimensions,
   FlatList,
   TextInput,
+  Image,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import COLORS from "../../consts/colors";
@@ -23,7 +24,7 @@ import SearchAddUpdateScreen from "./SearchAddUpdateScreen";
 const { width } = Dimensions.get("window");
 const { height } = Dimensions.get("window");
 
-export default class PlacTestScreen extends Component {
+export class TutorScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -44,7 +45,7 @@ export default class PlacTestScreen extends Component {
       };
       var Data = {
         name: name,
-        screen: "placement",
+        screen: "students",
       };
       fetch(searchAPIURL, {
         method: "POST",
@@ -107,18 +108,18 @@ export default class PlacTestScreen extends Component {
                 style={{
                   alignContent: "flex-end",
                   flexDirection: "row",
-                  justifyContent: "center",
+                  justifyContent: "space-evenly",
                   paddingBottom: height * 0.02,
                 }}
               >
                 <TouchableOpacity
-                  style={buttonStyles.button}
-                  onPress={() => this.props.navigation.navigate("AddPlacement")}
+                  style={buttonStyles.buttonAccept}
+                  onPress={() => this.props.navigation.navigate("AddStudent")}
                 >
-                  <Text>Add</Text>
+                  <Text style={textStyles.textAccept}>Add</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={buttonStyles.button}>
-                  <Text>Update</Text>
+                <TouchableOpacity style={buttonStyles.buttonDecline}>
+                  <Text style={textStyles.textDecline}>Update</Text>
                 </TouchableOpacity>
               </View>
               <FlatList
@@ -143,20 +144,23 @@ export default class PlacTestScreen extends Component {
                       {item.name}
                     </Text>
 
-                    <Text>Phone: {item.phone}</Text>
-                    <Text>Email: {item.email}</Text>
-                    <Text>Address: {item.address}</Text>
-                    <Text>Type: {item.type}</Text>
-                    <Text>Date: {item.date}</Text>
+                    <Text>phone: {item.phone}</Text>
+                    <Text>email: {item.email}</Text>
+                    <Text>class: {item.class}</Text>
+                    <Text>room: {item.room}</Text>
+                    <Text>tuition: {item.fee}</Text>
+                    <Text>address: {item.address}</Text>
+                    <Text>note: {item.note}</Text>
                   </TouchableOpacity>
                 )}
                 keyExtractor={(item, index) => index}
               />
             </View>
           </View>
-          <Text></Text>
         </View>
       </View>
     );
   }
 }
+
+export default TutorScreen;

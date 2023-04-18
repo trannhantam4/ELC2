@@ -8,6 +8,7 @@ import {
   Dimensions,
   FlatList,
   TextInput,
+  Image,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import COLORS from "../../consts/colors";
@@ -107,18 +108,18 @@ export default class StudentScreen extends Component {
                 style={{
                   alignContent: "flex-end",
                   flexDirection: "row",
-                  justifyContent: "center",
+                  justifyContent: "space-evenly",
                   paddingBottom: height * 0.02,
                 }}
               >
                 <TouchableOpacity
-                  style={buttonStyles.button}
+                  style={buttonStyles.buttonAccept}
                   onPress={() => this.props.navigation.navigate("AddStudent")}
                 >
-                  <Text>Add</Text>
+                  <Text style={textStyles.textAccept}>Add</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={buttonStyles.button}>
-                  <Text>Update</Text>
+                <TouchableOpacity style={buttonStyles.buttonDecline}>
+                  <Text style={textStyles.textDecline}>Update</Text>
                 </TouchableOpacity>
               </View>
               <FlatList
@@ -156,7 +157,6 @@ export default class StudentScreen extends Component {
               />
             </View>
           </View>
-          <Text></Text>
         </View>
       </View>
     );

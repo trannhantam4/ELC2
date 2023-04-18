@@ -20,14 +20,22 @@
     "ios": {
       "supportsTablet": true
     },
+    "plugins": ["@react-native-google-signin/google-signin"],
     "android": {
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.trannhantam4.ELC2"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "13e587e0-f7ca-434d-81f6-3c2cb24346b3"
+      }
     }
   }
 }

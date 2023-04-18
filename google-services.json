@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "827355421235",
+    "project_id": "elc2-504a5",
+    "storage_bucket": "elc2-504a5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:827355421235:android:5e735d211dcdf83768a146",
+        "android_client_info": {
+          "package_name": "com.trannhantam4.ELC2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "827355421235-f7t9rv0kicsm0bsoucr7on4olkbaicsh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.trannhantam4.ELC2",
+            "certificate_hash": "1380a0b4889749964b70b17c660539c59b885e90"
+          }
+        },
+        {
+          "client_id": "827355421235-shfsfu5146ge00fvj2sv0jij5od59vsd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.trannhantam4.ELC2",
+            "certificate_hash": "9baed81e946ec3fa8a171b9a3126c08090c910d3"
+          }
+        },
+        {
+          "client_id": "827355421235-bq9ll778ugbsqenp43tivufpd0b0ud3h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9Y9VwXfE24QPWjs4zhC2zkKjnN90cXuY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "827355421235-bq9ll778ugbsqenp43tivufpd0b0ud3h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

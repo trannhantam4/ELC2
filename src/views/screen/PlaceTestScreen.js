@@ -23,7 +23,7 @@ import SearchAddUpdateScreen from "./SearchAddUpdateScreen";
 const { width } = Dimensions.get("window");
 const { height } = Dimensions.get("window");
 
-export default class ClassScreen extends Component {
+export default class PlaceTestScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -44,7 +44,7 @@ export default class ClassScreen extends Component {
       };
       var Data = {
         name: name,
-        screen: "class",
+        screen: "placement",
       };
       fetch(searchAPIURL, {
         method: "POST",
@@ -113,7 +113,7 @@ export default class ClassScreen extends Component {
               >
                 <TouchableOpacity
                   style={buttonStyles.buttonAccept}
-                  onPress={() => this.props.navigation.navigate("AddClass")}
+                  onPress={() => this.props.navigation.navigate("AddPlacement")}
                 >
                   <Text>Add</Text>
                 </TouchableOpacity>
@@ -143,10 +143,11 @@ export default class ClassScreen extends Component {
                       {item.name}
                     </Text>
 
-                    <Text>From date: {item.fromDate}</Text>
-                    <Text>To date: {item.toDate}</Text>
-                    <Text>room: {item.room}</Text>
-                    <Text>quantity: {item.quantity}</Text>
+                    <Text>Phone: {item.phone}</Text>
+                    <Text>Email: {item.email}</Text>
+                    <Text>Address: {item.address}</Text>
+                    <Text>Type: {item.type}</Text>
+                    <Text>Date: {item.date}</Text>
                   </TouchableOpacity>
                 )}
                 keyExtractor={(item, index) => index}

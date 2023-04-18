@@ -22,6 +22,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import SearchAddUpdateScreen from "../SearchAddUpdateScreen";
+import { useHeaderHeight } from "@react-navigation/elements";
 const { width } = Dimensions.get("window");
 const { height } = Dimensions.get("window");
 
@@ -94,10 +95,20 @@ export default class AddStudentScreen extends Component {
   };
   render() {
     return (
-      <View style={{ justifyContent: "center", alignItems: "center" }}>
-        <View style={backgroundStyles.background}>
-          <KeyboardAvoidingView>
-            <ScrollView>
+      <KeyboardAvoidingView
+        keyboardVerticalOffset={height * 0.2}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
+      >
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <View style={backgroundStyles.background}>
+            <ScrollView style={{ paddingBottom: 200 }}>
               <Text>Name: </Text>
               <TextInput
                 style={textStyles.addTextInput}
@@ -145,21 +156,29 @@ export default class AddStudentScreen extends Component {
                 defaultValue={"N/A"}
                 onChangeText={(note) => this.setState({ note })}
               ></TextInput>
-              <View style={{ flexDirection: "row", alignSelf: "center" }}>
+              <View
+                style={{
+                  width: width,
+                  flexDirection: "row",
+                  alignSelf: "center",
+                  paddingTop: height * 0.02,
+                  justifyContent: "space-evenly",
+                }}
+              >
                 <TouchableOpacity
-                  style={buttonStyles.button}
+                  style={buttonStyles.buttonAccept}
                   onPress={this.searchRev}
                 >
                   <Text>Add</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={buttonStyles.button}>
+                <TouchableOpacity style={buttonStyles.buttonDecline}>
                   <Text>Cancel</Text>
                 </TouchableOpacity>
               </View>
             </ScrollView>
-          </KeyboardAvoidingView>
+          </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }

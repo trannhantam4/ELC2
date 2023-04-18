@@ -16,9 +16,22 @@ const textStyles = StyleSheet.create({
   textInput: {
     width: width * 0.7,
     height: height * 0.05,
+    padding: 10,
     borderTopLeftRadius: 10,
     borderBottomLeftRadius: 10,
     backgroundColor: "#b8b8b8",
+  },
+  textAccept: {
+    height: height * 0.03,
+    fontSize: height * 0.02,
+    color: COLORS.white,
+    fontWeight: "bold",
+  },
+  textDecline: {
+    height: height * 0.03,
+    fontSize: height * 0.02,
+    color: COLORS.green,
+    fontWeight: "bold",
   },
   addTextInput: {
     marginTop: height / 40,
@@ -51,16 +64,36 @@ const viewStyle = StyleSheet.create({
 });
 const buttonStyles = StyleSheet.create({
   button: {
+    backgroundColor: "#c2e0c1",
+    borderRadius: 15.0,
+    width: width * 0.38,
+    height: height * 0.13,
+    alignItems: "center",
+    justifyContent: "space-between",
+    margin: width * 0.03,
+    padding: height * 0.03,
+  },
+  buttonAccept: {
     borderColor: COLORS.green,
     borderRadius: 15.0,
     borderWidth: 2,
     borderRightWidth: 4,
     borderBottomWidth: 4,
-    width: width * 0.25,
+    width: width * 0.3,
     height: height * 0.07,
+    backgroundColor: COLORS.green,
+    justifyContent: "center",
     alignItems: "center",
-    margin: width * 0.03,
-    padding: height * 0.01,
+  },
+  buttonDecline: {
+    borderColor: COLORS.green,
+    borderRadius: 15.0,
+    borderWidth: 2,
+    width: width * 0.3,
+    height: height * 0.07,
+    backgroundColor: COLORS.white,
+    justifyContent: "center",
+    alignItems: "center",
   },
   searchButton: {
     height: height * 0.05,
