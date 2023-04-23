@@ -10,6 +10,7 @@ import {
   FlatList,
   TextInput,
   Button,
+  Pressable,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import COLORS from "../../consts/colors";
@@ -80,15 +81,6 @@ function LoginScreen({ navigation }) {
       "827355421235-bq9ll778ugbsqenp43tivufpd0b0ud3h.apps.googleusercontent.com",
   });
 
-  const signOut = async () => {
-    try {
-      await GoogleSignin.revokeAccess();
-      await auth().signOut();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <View
       style={{
@@ -106,7 +98,6 @@ function LoginScreen({ navigation }) {
           onGoogleButtonPress();
         }}
       />
-      <Button title="Sign Out" onPress={signOut}></Button>
     </View>
   );
 }
