@@ -45,10 +45,6 @@ const { height } = Dimensions.get("window");
 function HomeScreen({ navigation }) {
   const user = firebase.auth().currentUser;
 
-  user.providerData.forEach((userInfo) => {
-    console.log("User info for provider: ", userInfo);
-  });
-
   const signOut = async () => {
     try {
       await GoogleSignin.revokeAccess();
@@ -201,7 +197,10 @@ const Stack = createNativeStackNavigator();
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="LoginScreen">
+      <Stack.Navigator
+        initialRouteName="LoginScreen"
+        screenOptions={{ headerShown: false }}
+      >
         <Stack.Screen name="Home" component={HomeScreen}></Stack.Screen>
         <Stack.Screen name="Class" component={ClassScreen} />
         <Stack.Screen name="Student" component={StudentScreen} />

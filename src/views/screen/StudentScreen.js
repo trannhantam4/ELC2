@@ -2,13 +2,12 @@ import React, { useState, useEffect, Component } from "react";
 import {
   Text,
   View,
-  StyleSheet,
-  ScrollView,
   TouchableOpacity,
   Dimensions,
   FlatList,
   TextInput,
-  Image,
+  ActivityIndicator,
+  KeyboardAvoidingView,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import COLORS from "../../consts/colors";
@@ -17,148 +16,128 @@ import {
   textStyles,
   backgroundStyles,
 } from "../../consts/styles";
+import {
+  doc,
+  setDoc,
+  collection,
+  addDoc,
+  orderBy,
+  query,
+  onSnapshot,
+  getDocs,
+  where,
+} from "firebase/firestore";
+
 import { Ionicons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import SearchAddUpdateScreen from "./SearchAddUpdateScreen";
 const { width } = Dimensions.get("window");
+import firestore from "@react-native-firebase/firestore";
 const { height } = Dimensions.get("window");
+import { db } from "../../../config/firebase";
+import { useNavigation } from "@react-navigation/native";
 
-export default class StudentScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      dataSource: [],
-      name: "",
-      screen: "",
-    };
-  }
-  searchRev = ({ route, navigation }) => {
-    var name = this.state.name;
-    if (name.length == 0) {
-      alert("require field is missing");
-    } else {
-      var searchAPIURL = "http://www.filmcamshop.com/api/totalSearch.php";
-      var header = {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      };
-      var Data = {
-        name: name,
-        screen: "students",
-      };
-      fetch(searchAPIURL, {
-        method: "POST",
-        headers: header,
-        body: JSON.stringify(Data),
-      })
-        .then((response) => response.json())
-        .then((responseJson) => {
-          this.setState({
-            dataSource: responseJson.item,
-          });
-        })
-        .catch((error) => {
-          console.error(error);
+export default function StudentScreen() {
+  const navigation = useNavigation();
+  const [loading, setLoading] = useState(true); // Set loading to true on component mount
+  const [students, setStudents] = useState([]); // Initial empty array of students
+  const [search, setSearch] = useState("");
+  const [classes, setClass] = useState("");
+  function create() {
+    getDocs(query(collection(db, "students"), where("name", "==", search)))
+      .then((docSnap) => {
+        let students = [];
+        docSnap.forEach((doc) => {
+          students.push({ ...doc.data(), id: doc.id });
         });
-    }
-  };
-  render() {
-    return (
-      <View style={{ justifyContent: "center", alignItems: "center" }}>
-        <View style={backgroundStyles.background}>
+        console.log("Data:", students[0]);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  return (
+    <KeyboardAvoidingView
+      style={{ justifyContent: "center", alignItems: "center" }}
+    >
+      <View style={backgroundStyles.background}>
+        <View
+          style={{
+            flexDirection: "column",
+            justifyContent: "center",
+            paddingTop: height * 0.04,
+          }}
+        >
           <View
             style={{
+              alignContent: "flex-end",
+              flexDirection: "row",
+              justifyContent: "center",
+              paddingBottom: height * 0.02,
+            }}
+          >
+            <TextInput
+              style={textStyles.textInput}
+              onChangeText={(search) => {
+                setSearch(search);
+              }}
+            ></TextInput>
+            <TouchableOpacity
+              onPress={create}
+              style={buttonStyles.searchButton}
+            >
+              <MaterialCommunityIcons
+                name="magnify"
+                size={height * 0.04}
+              ></MaterialCommunityIcons>
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              alignContent: "flex-end",
               flexDirection: "column",
               justifyContent: "center",
-              paddingTop: height * 0.04,
+              paddingBottom: height * 0.02,
             }}
           >
             <View
               style={{
                 alignContent: "flex-end",
                 flexDirection: "row",
-                justifyContent: "center",
+                justifyContent: "space-evenly",
                 paddingBottom: height * 0.02,
               }}
             >
-              <TextInput
-                style={textStyles.textInput}
-                onChangeText={(name) => this.setState({ name })}
-              ></TextInput>
               <TouchableOpacity
-                onPress={this.searchRev}
-                style={buttonStyles.searchButton}
+                style={buttonStyles.buttonAccept}
+                onPress={() => navigation.navigate("AddStudent")}
               >
-                <MaterialCommunityIcons
-                  name="magnify"
-                  size={height * 0.04}
-                ></MaterialCommunityIcons>
+                <Text style={textStyles.textAccept}>Add</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={buttonStyles.buttonDecline}>
+                <Text style={textStyles.textDecline}>Update</Text>
               </TouchableOpacity>
             </View>
-            <View
-              style={{
-                alignContent: "flex-end",
-                flexDirection: "column",
-                justifyContent: "center",
-                paddingBottom: height * 0.02,
-              }}
-            >
-              <View
-                style={{
-                  alignContent: "flex-end",
-                  flexDirection: "row",
-                  justifyContent: "space-evenly",
-                  paddingBottom: height * 0.02,
-                }}
-              >
-                <TouchableOpacity
-                  style={buttonStyles.buttonAccept}
-                  onPress={() => this.props.navigation.navigate("AddStudent")}
+            <FlatList
+              data={students}
+              renderItem={({ item }) => (
+                <View
+                  style={{
+                    height: height * 0.01,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
                 >
-                  <Text style={textStyles.textAccept}>Add</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={buttonStyles.buttonDecline}>
-                  <Text style={textStyles.textDecline}>Update</Text>
-                </TouchableOpacity>
-              </View>
-              <FlatList
-                style={{
-                  marginTop: height * 0.03,
-                  marginBottom: height * 0.01,
-                }}
-                data={this.state.dataSource}
-                renderItem={({ item }) => (
-                  <TouchableOpacity
-                    style={{
-                      width: width * 0.9,
-                      alignSelf: "center",
-                      backgroundColor: COLORS.light,
-                      marginBottom: height * 0.01,
-                      borderRadius: 20,
-                      padding: 10,
-                    }}
-                    onPress={() => {}}
-                  >
-                    <Text style={{ fontWeight: "bold", fontSize: 15 }}>
-                      {item.name}
-                    </Text>
-
-                    <Text>phone: {item.phone}</Text>
-                    <Text>email: {item.email}</Text>
-                    <Text>class: {item.class}</Text>
-                    <Text>room: {item.room}</Text>
-                    <Text>tuition: {item.fee}</Text>
-                    <Text>address: {item.address}</Text>
-                    <Text>note: {item.note}</Text>
-                  </TouchableOpacity>
-                )}
-                keyExtractor={(item, index) => index}
-              />
-            </View>
+                  <Text>class: {item.class}</Text>
+                  <Text>name: {item.name}</Text>
+                </View>
+              )}
+            />
           </View>
         </View>
       </View>
-    );
-  }
+    </KeyboardAvoidingView>
+  );
 }
