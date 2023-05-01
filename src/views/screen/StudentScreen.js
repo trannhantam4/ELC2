@@ -41,17 +41,17 @@ import { useNavigation } from "@react-navigation/native";
 export default function StudentScreen() {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(true); // Set loading to true on component mount
-  const [students, setStudents] = useState([]); // Initial empty array of students
+  const [students, setStudents] = useState(""); // Initial empty array of students
   const [search, setSearch] = useState("");
-  const [classes, setClass] = useState("");
   function create() {
-    getDocs(query(collection(db, "students"), where("name", "==", search)))
+    getDocs(query(collection(db, "students"), where("students", "==", search)))
       .then((docSnap) => {
-        let students = [];
+        let student = [];
         docSnap.forEach((doc) => {
-          students.push({ ...doc.data(), id: doc.id });
+          student.push({ ...doc.data(), id: doc.id });
         });
-        console.log("Data:", students[0]);
+        setStudents(student);
+        console.log(student);
       })
       .catch((error) => {
         console.log(error);
@@ -125,13 +125,18 @@ export default function StudentScreen() {
               renderItem={({ item }) => (
                 <View
                   style={{
-                    height: height * 0.01,
+                    backgroundColor: COLORS.lightGreen,
+                    height: height * 0.2,
                     alignItems: "center",
                     justifyContent: "center",
+                    borderRadius: 30,
                   }}
                 >
-                  <Text>class: {item.class}</Text>
                   <Text>name: {item.name}</Text>
+                  <Text>class: {item.classes}</Text>
+                  <Text>tuition: {item.tuition}</Text>
+                  <Text>date: {item.date}</Text>
+                  <Text>time: {item.time}</Text>
                 </View>
               )}
             />
